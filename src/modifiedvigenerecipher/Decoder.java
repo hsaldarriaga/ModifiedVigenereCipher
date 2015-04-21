@@ -61,7 +61,7 @@ public class Decoder implements Runnable{
         LetterFrequency.put('x', 0.150f);	
         LetterFrequency.put('y', 1.974f);	
         LetterFrequency.put('z', 0.074f);	
- 
+        //http://en.wikipedia.org/wiki/Letter_frequency
     }
     
     public void getTextAsyncronous(byte[] data){
@@ -91,7 +91,7 @@ public class Decoder implements Runnable{
         final Answer answer = new Answer();
         //----------------------------------
         int patronSize = 2;
-        int MaxPatronSize = 6;
+        int MaxPatronSize = 6; //http://www.wolframalpha.com/input/?i=average+english+word+length
         boolean Coincidence = false;
         found = false;
         Count =0;
@@ -99,6 +99,7 @@ public class Decoder implements Runnable{
         ArrayList<Integer> PossibleKey = new ArrayList<>();
         ArrayList<Integer> Repetition = new ArrayList<>();
         SetText("Buscando Patrones..", -1);
+        //Buscan todos los patrones de tamaño minimo patronSize y maximo MaxPatronSize
         while (!Coincidence)
         {
             patronSize ++;
@@ -120,14 +121,14 @@ public class Decoder implements Runnable{
                     }
                 }
                 if (Pos_Patron.size() > 1) {
-                    int num = MCD(Pos_Patron);
+                    int num = MCD(Pos_Patron); //MCD entre las posiciones que repitió cierto patron
                     int R = Pos_Patron.size();
-                    if (num > 2) {
-                        Repetition.add(R);
-                        PossibleKey.add(num);
+                    if (num > 2) { //Restriccion de longtidu de la llave mayor que dos
+                        Repetition.add(R); // Posiciones donde se repitió
+                        PossibleKey.add(num); // Possible llaves
                     }
                 }
-                if (Mayor(Repetition) > data.length*0.012){
+                if (Mayor(Repetition) > data.length*0.012){ // Se repitio tantas veces que es una alta probabilidad de que sea la llave
                     Coincidence = true;
                     break;
                 }
@@ -140,6 +141,19 @@ public class Decoder implements Runnable{
         int media = 0;
         int k= 0;
         ArrayList<PossibleKeySize> sizes = new ArrayList<>();
+        /**
+         * llaves posibles
+        1 2 3 6 7 10 13
+
+        1 +2 +3 +6+ 7+ 10 +13 = 42
+
+        42 / 7 = 6
+
+        promedio = 6 
+
+        las nuevas posibles llaves son
+        7 10 13
+         */
         for (int i = 0; i < PossibleKey.size(); i++) {
             if (!escaneados.contains(PossibleKey.get(i)))
             {
@@ -176,7 +190,7 @@ public class Decoder implements Runnable{
             PossibleKeySize size = sizes.get(l);
             ArrayList<Byte> key = new ArrayList<>();
             try {
-                Llave(size.Longitud_Llave, size.Longitud_Llave, values, key, sizes.size());
+                Llave(size.Longitud_Llave, size.Longitud_Llave, values, key, sizes.size()); // Busca todas las posibles llaves
             } catch (UnsupportedEncodingException ex) {
                 Logger.getLogger(Decoder.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -190,7 +204,7 @@ public class Decoder implements Runnable{
         }
         SetText("Decifrando Texto..", 90);
         String text = "";
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; i < data.length; i++) { // Descifro el codigo
             for (int j = 0; j < Solution.length && i + j < data.length; j++) {
                 text += ((char)(data[i+j] ^ Solution[j]))+"";
             }
@@ -204,7 +218,7 @@ public class Decoder implements Runnable{
         }
         //----------------------------------
         SwingUtilities.invokeLater(() -> {
-            call.onFinish(answer);
+            call.onFinish(answer); // Muestra el resultado
         });
     }
     public void Llave(int LongKey, int templongkey, ArrayList<Byte> Values, ArrayList<Byte> key, int numkeys) throws UnsupportedEncodingException
@@ -213,27 +227,27 @@ public class Decoder implements Runnable{
         {
             for (int i = 0; i < Values.size() && !found; i++) {
                 Byte r = Values.get(i);
-                if (ValidChar(r, LongKey - templongkey, LongKey)){
+                if (ValidChar(r, LongKey - templongkey, LongKey)){ // Mira si la llave da caracteres no imprimibles
                     ArrayList<Byte> pkey = new ArrayList<>(key);
-                    pkey.add(r);
+                    pkey.add(r); // Prueba todas las posibilidades
                     Llave(LongKey, templongkey - 1, Values, pkey, numkeys);
                 }
             }
         } else {
-           if (!found) {
+           if (!found) { // Hay una llave posible
                 Count += 1;
                 double doublevalue = (Count/(Math.pow(LongKey, Values.size()*0.055)))*(70.0d/numkeys);
                 int value = (int) (Total + (doublevalue < (70.0d/numkeys) ? (int)(doublevalue) : (70.0d/numkeys)));
                 SetText(null, value);
-                float errorA = getError(key);
-                if (errorA < error)
+                float errorA = getError(key); // Obtengo la suma de porcentaje de repeticion de cada letra del ingles
+                if (errorA < error) // Se reemplaza por una mejor llave
                 {
                     TempSol = new byte[LongKey];
                     for (int i = 0; i < LongKey; i++) {
                         TempSol[i] = key.get(i);
                     }
                     error = errorA;
-                    if (error < 25)
+                    if (error < 25) // Si el error es menor que 25 entonces, posiblemente ya no se pueda encontrar una llave mejor
                         found = true;
                 }
             }
