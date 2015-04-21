@@ -32,48 +32,27 @@ public class MVCgui extends javax.swing.JFrame implements CallBack{
     private void initComponents() {
 
         Lb_text = new javax.swing.JLabel();
-        Text = new javax.swing.JTextField();
         Lb_key = new javax.swing.JLabel();
-        key = new javax.swing.JTextField();
-        jPanel1 = new javax.swing.JPanel();
         Lb_status = new javax.swing.JLabel();
         Progress = new javax.swing.JProgressBar();
         Bt_cipher = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Text = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        key = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridLayout(8, 0));
+        setMinimumSize(new java.awt.Dimension(666, 426));
+        setResizable(false);
 
         Lb_text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Lb_text.setText("Text (ASCII)");
-        getContentPane().add(Lb_text);
-
-        Text.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        getContentPane().add(Text);
 
         Lb_key.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Lb_key.setText("Key (Hex)");
-        getContentPane().add(Lb_key);
-
-        key.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        getContentPane().add(key);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 418, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 26, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(jPanel1);
 
         Lb_status.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Lb_status.setText("Status");
-        getContentPane().add(Lb_status);
-        getContentPane().add(Progress);
 
         Bt_cipher.setText("Cifrar");
         Bt_cipher.addActionListener(new java.awt.event.ActionListener() {
@@ -86,7 +65,50 @@ public class MVCgui extends javax.swing.JFrame implements CallBack{
                 Bt_cipherKeyReleased(evt);
             }
         });
-        getContentPane().add(Bt_cipher);
+
+        Text.setColumns(20);
+        Text.setLineWrap(true);
+        Text.setRows(5);
+        Text.setText("The first well documented description of a polyalphabetic cipher was formulated by Leon Battista Alberti around 1467 and used a metal cipher disc to switch between cipher alphabets. Alberti's system only switched alphabets after several words, and switches were indicated by writing the letter of the corresponding alphabet in the ciphertext. Later, in 1508, Johannes Trithemius, in his work Poligraphia, invented the tabula recta, a critical component of the Vigenère cipher. The Trithemius cipher, however, only provided a progressive, rigid and predictable system for switching between cipher alphabets.What is now known as the Vigenère cipher was originally described by Giovan Battista Bellaso in his 1553 book La cifra del. Sig. Giovan Battista Bellaso. He built upon the tabula recta of Trithemius, but added a repeating \"countersign\" (a key) to switch cipher alphabets every letter. Whereas Alberti and Trithemius used a fixed pattern of substitutions, Bellaso's scheme meant the pattern of substitutions could be easily changed simply by selecting a new key. Keys were typically single words or short phrases, known to both parties in advance, or transmitted \"out of band\" along with the message. Bellaso's method thus required strong security for only the key. As it is relatively easy to secure a short key phrase, say by a previous private conversation, Bellaso's system was considerably more secure.");
+        jScrollPane1.setViewportView(Text);
+
+        key.setColumns(20);
+        key.setLineWrap(true);
+        key.setRows(5);
+        key.setText("7769676c657769676c65");
+        jScrollPane2.setViewportView(key);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Lb_text, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Progress, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
+            .addComponent(Bt_cipher, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane2)
+            .addComponent(Lb_status, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Lb_key, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addComponent(Lb_text, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Lb_key, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Lb_status, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Progress, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Bt_cipher, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -166,11 +188,8 @@ public class MVCgui extends javax.swing.JFrame implements CallBack{
         /*
          * Create and display the form
          */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new MVCgui().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MVCgui().setVisible(true);
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -179,17 +198,18 @@ public class MVCgui extends javax.swing.JFrame implements CallBack{
     private javax.swing.JLabel Lb_status;
     private javax.swing.JLabel Lb_text;
     private javax.swing.JProgressBar Progress;
-    private javax.swing.JTextField Text;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField key;
+    private javax.swing.JTextArea Text;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea key;
     // End of variables declaration//GEN-END:variables
     private byte[] CipherText;
     private boolean state = true;
-    private Decoder decoder;
+    private final Decoder decoder;
 
     @Override
     public void onFinish(Decoder.Answer answer) {
-        if (CipherText!=null) {
+        if (answer!=null) {
                 state = true;
                 Text.setEnabled(true);
                 key.setEnabled(true);
@@ -197,6 +217,7 @@ public class MVCgui extends javax.swing.JFrame implements CallBack{
                 key.setText(answer.key);
                 Bt_cipher.setText("Cifrar");
                 Lb_text.setText("Text(ASCII)");
+                Lb_key.setText("Key (Hex)");
             } else {
                 Lb_status.setText("Error Descifrando.");
             }
